@@ -1,0 +1,13 @@
+version: '1'
+
+services:
+    app:
+        platform: linux/amd64
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ..:/opt/workspace
+        command: /bin/sh -c "while sleep 1000; do :; done"
+        ports:
+            - 3000:3000

@@ -1,0 +1,9 @@
+{
+	"name": "Open-innov",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/opt/workspace",
+	"settings": {},
+	"extensions": [],
+	"forwardPorts": [3000]
+}
