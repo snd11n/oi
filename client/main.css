@@ -16,8 +16,8 @@ body {
   background-color: #EA99A2;
   color: black;
 }
-.res-circle {
 
+.res-circle {
   width: 10%;
   border-radius: 50%;
   background: #bcd6ff;
@@ -33,12 +33,10 @@ body {
 }
  
 .circle-txt {
-
   position: absolute;
   bottom: 50%;
   width: 100%;
   text-align: center;
- 
-  font-family: arial, sans-serif;
+
   font-weight: bold;
 }

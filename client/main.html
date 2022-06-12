@@ -29,13 +29,13 @@
         <div class="p-4">
             <div class="row">
                 <div class="col text-center">
-                    {{> Cible cible_number="1" cible_metter="15" cible_point="1"}}
+                    {{> cible1 }}
                 </div>
                 <div class="col text-center">
-                    {{> Cible cible_number="2" cible_metter="25" cible_point="3"}}
+                    {{> cible2 }}
                 </div>
                 <div class="col text-center">
-                    {{> Cible cible_number="3" cible_metter="35" cible_point="5"}}
+                    {{> cible3 }}
                 </div>
             </div>
         </div>
@@ -115,23 +115,37 @@
     <h5 class="my-4">Temps restant : {{ seconds }} s.</h5>
 </template>
 
-<template name="cible1">
+<!--<template name="cible1">
     <button>toto</button>
-</template>
+</template>-->
 
 <template name="totalPoints">
     <h5 class="my-4">Total de points : {{ total }}</h5>
 </template>
 
-<template name="Cible">
-    <div class="cible_number"></div>
-    <div class="cible_metter"></div>
-    <div class="cible_point"></div>
-    <p >Cible {{cible_number}} - {{cible_metter}}m ({{cible_point}}point)</p>
+<template name="cible1">
+    <p >Cible 1 - {{ c1Distance }} m ({{ c1Points }} point(s))</p>
     <div class="res-circle">
-      <p class="circle-txt">Points</p>
+        <p class="circle-txt">Points</p>
+        <h1></h1>
     </div>
-  </template>
+</template>
+
+<template name="cible2">
+    <p >Cible 2 - {{ c2Distance }} m ({{ c2Points }} point(s))</p>
+    <div class="res-circle">
+        <p class="circle-txt">Points</p>
+        <h1></h1>
+    </div>
+</template>
+
+<template name="cible3">
+    <p >Cible 3 - {{ c3Distance }} m ({{ c3Points }} point(s))</p>
+    <div class="res-circle">
+        <p class="circle-txt">Points</p>
+        <h1></h1>
+    </div>
+</template>
   
 <template name="reinitialize">
     {{#if isDisabled }}
