@@ -29,13 +29,13 @@
         <div class="p-4">
             <div class="row">
                 <div class="col text-center">
-                    {{> Cible cible_number="1" cible_metter="15" cible_point="1"}}
+                    {{> cible1 }}
                 </div>
                 <div class="col text-center">
-                    {{> Cible cible_number="2" cible_metter="25" cible_point="3"}}
+                    <p>Plop</p>
                 </div>
                 <div class="col text-center">
-                    {{> Cible cible_number="3" cible_metter="35" cible_point="5"}}
+                    <p>Plop</p>
                 </div>
             </div>
         </div>
@@ -45,18 +45,16 @@
             <div class="row">
                 <div class="col text-center">
                     <div class="border border-4 border-dark rounded-3">
-                        <h5 class="my-4">Compte à rebours</h5>
+                        {{> timer }}
                     </div>
                 </div>
                 <div class="col text-center">
                     <div class="border border-4 border-dark rounded-3">
-                        <h5 class="my-4">Total de points</h5>
+                        {{> totalPoints }}
                     </div>
                 </div>
                 <div class="col text-center">
-                    <button class="border border-4 border-dark rounded-3 bg-danger text-white w-100 h-100" onclick="console.log('toto');">
-                        <h5>Réinitialiser</h5>
-                    </button>
+                    {{> reinitialize }}
                 </div>
             </div>
         </div>
@@ -113,24 +111,26 @@
     </div>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="timer">
+    <h5 class="my-4">Temps restant : {{ seconds }} s.</h5>
 </template>
 
-<template name="Cible">
-    <div class="cible_number"></div>
-    <div class="cible_metter"></div>
-    <div class="cible_point"></div>
-    <p >Cible {{cible_number}} - {{cible_metter}}m ({{cible_point}}point)</p>
-    <div class="res-circle">
-            <p class="circle-txt">Points</p>
-    </div>
-  </template>
+<template name="cible1">
+    <button>toto</button>
+</template>
 
-<template name="info">
-  <h2>Learn Meteor!</h2>
-  <ul>
-    <li><a href="https://www.meteor.com/try" target="_blank">Do the Tutorial</a></li>
-  </ul>
+<template name="totalPoints">
+    <h5 class="my-4">Total de points : {{ total }}</h5>
+</template>
+
+<template name="reinitialize">
+    {{#if isDisabled }}
+    <button id="reinitializeBtn" class="border border-4 border-dark rounded-3 w-100 h-100" disabled>
+        <h5>Réinitialiser</h5>
+    </button>
+    {{else}}
+    <button id="reinitializeBtn" class="border border-4 border-dark rounded-3 text-white w-100 h-100">
+        <h5>Réinitialiser</h5>
+    </button>
+    {{/ if}}
 </template>

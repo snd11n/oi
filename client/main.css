@@ -3,25 +3,16 @@ body {
   font-family: sans-serif;
 }
 
-.res-circle {
-  width: 20%;
-  border-radius: 50%;
-
-  background: #e18484;
-
-  line-height: 0;
-  position: relative;
+#reinitializeBtn {
+  background-color: #C82333;
 }
- 
-.res-circle::after {
-  content: "";
-  display: block;
-  padding-bottom: 100%;
+
+#reinitializeBtn:hover {
+  background-color: #DC3545;
 }
- 
-.circle-txt {
-  position: absolute;
-  bottom: 40%;
-  width: 100%;
-  text-align: center;
+
+#reinitializeBtn[disabled] {
+  cursor: not-allowed;
+  background-color: #EA99A2;
+  color: black;
 }
