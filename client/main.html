@@ -29,7 +29,7 @@
         <div class="p-4">
             <div class="row">
                 <div class="col text-center">
-                    <p>Plop</p>
+                    {{> cible1 }}
                 </div>
                 <div class="col text-center">
                     <p>Plop</p>
@@ -45,18 +45,16 @@
             <div class="row">
                 <div class="col text-center">
                     <div class="border border-4 border-dark rounded-3">
-                        <h5 class="my-4">Compte à rebours</h5>
+                        {{> timer }}
                     </div>
                 </div>
                 <div class="col text-center">
                     <div class="border border-4 border-dark rounded-3">
-                        <h5 class="my-4">Total de points</h5>
+                        {{> totalPoints }}
                     </div>
                 </div>
                 <div class="col text-center">
-                    <button class="border border-4 border-dark rounded-3 bg-danger text-white w-100 h-100" onclick="console.log('toto');">
-                        <h5>Réinitialiser</h5>
-                    </button>
+                    {{> reinitialize }}
                 </div>
             </div>
         </div>
@@ -111,19 +109,28 @@
             </div>
         </div>
     </div>
-
-  <!-- {{> hello}} -->
-  <!-- {{> info}} -->
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="timer">
+    <h5 class="my-4">Temps restant : {{ seconds }} s.</h5>
 </template>
 
-<template name="info">
-  <h2>Learn Meteor!</h2>
-  <ul>
-    <li><a href="https://www.meteor.com/try" target="_blank">Do the Tutorial</a></li>
-  </ul>
+<template name="cible1">
+    <button>toto</button>
+</template>
+
+<template name="totalPoints">
+    <h5 class="my-4">Total de points : {{ total }}</h5>
+</template>
+
+<template name="reinitialize">
+    {{#if isDisabled }}
+    <button id="reinitializeBtn" class="border border-4 border-dark rounded-3 w-100 h-100" disabled>
+        <h5>Réinitialiser</h5>
+    </button>
+    {{else}}
+    <button id="reinitializeBtn" class="border border-4 border-dark rounded-3 text-white w-100 h-100">
+        <h5>Réinitialiser</h5>
+    </button>
+    {{/ if}}
 </template>

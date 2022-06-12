@@ -1,23 +1,61 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Blaze } from 'meteor/blaze';
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import './main.html';
 
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
+// ------------------------------ Variables ------------------------------ //
+
+// Template [timer]
+var seconds = new ReactiveVar(10);
+
+// Template [totalPoints]
+var total = new ReactiveVar(0);
+
+// Template [reinitialize]
+var isDisabled = new ReactiveVar(true);
+
+// ------------------------------ Templates ------------------------------ //
+
+// Template [cible1]
+Template.cible1.events({
+    'click button'() {
+        isDisabled.set(true);
+        countdownTimer();
+    }
 });
 
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
+// Template [timer]
+Template.timer.helpers({
+  seconds() { return seconds.get(); }
 });
 
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
+// Template [totalPoints]
+Template.totalPoints.helpers({
+    total() { return total.get(); }
 });
+
+// Template [reinitialize]
+Template.reinitialize.helpers({
+    isDisabled() { return isDisabled.get() }
+});
+
+Template.reinitialize.events({
+  'click #reinitializeBtn'() {
+      isDisabled.set(true);
+      total.set(0);
+      seconds.set(10);
+  }
+})
+
+// ------------------------------ Functions ------------------------------ //
+
+async function countdownTimer() {
+    while (seconds.get() > 0) {
+        seconds.set(seconds.get() - 1);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    isDisabled.set(false);
+}
