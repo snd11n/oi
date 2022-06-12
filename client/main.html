@@ -29,13 +29,13 @@
         <div class="p-4">
             <div class="row">
                 <div class="col text-center">
-                    {{> cible1 }}
+                    {{> Cible cible_number="1" cible_metter="15" cible_point="1"}}
                 </div>
                 <div class="col text-center">
-                    <p>Plop</p>
+                    {{> Cible cible_number="2" cible_metter="25" cible_point="3"}}
                 </div>
                 <div class="col text-center">
-                    <p>Plop</p>
+                    {{> Cible cible_number="3" cible_metter="35" cible_point="5"}}
                 </div>
             </div>
         </div>
@@ -123,6 +123,16 @@
     <h5 class="my-4">Total de points : {{ total }}</h5>
 </template>
 
+<template name="Cible">
+    <div class="cible_number"></div>
+    <div class="cible_metter"></div>
+    <div class="cible_point"></div>
+    <p >Cible {{cible_number}} - {{cible_metter}}m ({{cible_point}}point)</p>
+    <div class="res-circle">
+      <p class="circle-txt">Points</p>
+    </div>
+  </template>
+  
 <template name="reinitialize">
     {{#if isDisabled }}
     <button id="reinitializeBtn" class="border border-4 border-dark rounded-3 w-100 h-100" disabled>
