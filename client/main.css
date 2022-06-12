@@ -2,3 +2,26 @@ body {
   padding: 10px;
   font-family: sans-serif;
 }
+
+.res-circle {
+  width: 20%;
+  border-radius: 50%;
+
+  background: #e18484;
+
+  line-height: 0;
+  position: relative;
+}
+ 
+.res-circle::after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+ 
+.circle-txt {
+  position: absolute;
+  bottom: 40%;
+  width: 100%;
+  text-align: center;
+}
