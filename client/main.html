@@ -1,12 +1,113 @@
 <head>
-  <title>oi</title>
+  <title>Target counter</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+    <!-- Barre de navigation -->
+    <div class="container-fluid">
+        <nav class="navbar navbar-light navbar-expand-lg bg-light">
+            <a class="navbar-brand">Target counter</a>
+            <div class="collapse navbar-collapse">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="">Parcours 1</a>
+                    <a class="nav-item nav-link" href="">Parcours 2</a>
+                    <a class="nav-item nav-link" href="">Parcours 3</a>
+                </div>
+            </div>
+        </nav>
+    </div>
 
-  {{> hello}}
-  {{> info}}
+    <!-- Titre -->
+    <div class="container-fluid">
+        <div class="flex p-4">
+            <h1>Target counter</h1>
+        </div>
+    </div>
+
+    <!-- Cibles -->
+    <div class="container-fluid text-center">
+        <div class="flex p-4">
+            <div class="row">
+                <div class="col text-center">
+                    <p>Plop</p>
+                </div>
+                <div class="col text-center">
+                    <p>Plop</p>
+                </div>
+                <div class="col text-center">
+                    <p>Plop</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Helpers -->
+        <div class="flex p-4">
+            <div class="row">
+                <div class="col text-center">
+                    <p>Plop</p>
+                </div>
+                <div class="col text-center">
+                    <p>Plop</p>
+                </div>
+                <div class="col text-center">
+                    <p>Plop</p>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+    <!-- Titre historique des scores -->
+    <div class="container-fluid">
+        <div class="flex p-4">
+            <h1>Tableau des scores</h1>
+        </div>
+    </div>
+
+    <!-- Historique des scores -->
+    <div class="container">
+        <div class="flex p-4">
+            <div class="text-center">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="">Partie #</th>
+                            <th scope="col">Cible 1</th>
+                            <th scope="col">Cible 2</th>
+                            <th scope="col">Cible 3</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>6</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+  <!-- {{> hello}} -->
+  <!-- {{> info}} -->
 </body>
 
 <template name="hello">
@@ -18,8 +119,5 @@
   <h2>Learn Meteor!</h2>
   <ul>
     <li><a href="https://www.meteor.com/try" target="_blank">Do the Tutorial</a></li>
-    <li><a href="http://guide.meteor.com" target="_blank">Follow the Guide</a></li>
-    <li><a href="https://docs.meteor.com" target="_blank">Read the Docs</a></li>
-    <li><a href="https://forums.meteor.com" target="_blank">Discussions</a></li>
   </ul>
 </template>
