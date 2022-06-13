@@ -10,26 +10,29 @@ import './main.html';
 // Template [cible1]
 var c1Distance = 15;
 var c1Points = 1;
-var c1InPoint = 0;
+var c1NbTouch = 0;
+var c1TotalPoints = 0;
 
 // Template [cible2]
 var c2Distance = 25;
 var c2Points = 3;
-var c2InPoint = 0;
+var c2NbTouch = 0;
+var c2TotalPoints = 0;
 
 // Template [cible3]
 var c3Distance = 35;
 var c3Points = 5;
-var cInPoint = 0;
+var c3NbTouch = 0;
+var c3TotalPoints = 0;
 
 // Template [timer]
-var seconds = new ReactiveVar(10);
+var seconds = 10;
 
 // Template [totalPoints]
-var total = new ReactiveVar(0);
+var total = 0;
 
 // Template [reinitialize]
-var isDisabled = new ReactiveVar(true);
+var isDisabled = true;
 
 // ------------------------------ Templates ------------------------------ //
 
@@ -37,12 +40,12 @@ var isDisabled = new ReactiveVar(true);
 Template.cible1.helpers({
     c1Distance() { return c1Distance; },
     c1Points() { return c1Points; },
-    c1InPoint() { return c1InPoint; },
+    c1TotalPoints() { return c1TotalPoints; },
 });
 
 /*Template.cible1.events({
     'click button'() {
-        isDisabled.set(true);
+        isDisabled = true;
         countdownTimer();
     }
 });*/
@@ -51,45 +54,45 @@ Template.cible1.helpers({
 Template.cible2.helpers({
     c2Distance() { return c2Distance; },
     c2Points() { return c2Points; },
-    c2InPoint() { return c1InPoint; },
+    c2TotalPoints() { return c2TotalPoints; },
 });
 
 // Template [cible3]
 Template.cible3.helpers({
     c3Distance() { return c3Distance; },
     c3Points() { return c3Points; },
-    c3InPoint() { return c1InPoint; },
+    c3TotalPoints() { return c3TotalPoints; },
 });
 
 // Template [timer]
 Template.timer.helpers({
-  seconds() { return seconds.get(); }
+  seconds() { return seconds; }
 });
 
 // Template [totalPoints]
 Template.totalPoints.helpers({
-    total() { return total.get(); }
+    total() { return total; }
 });
 
 // Template [reinitialize]
 Template.reinitialize.helpers({
-    isDisabled() { return isDisabled.get() }
+    isDisabled() { return isDisabled; }
 });
 
 Template.reinitialize.events({
   'click #reinitializeBtn'() {
-      isDisabled.set(true);
+      isDisabled = true;
       total.set(0);
-      seconds.set(10);
+      seconds = 10;
   }
 })
 
 // ------------------------------ Functions ------------------------------ //
 
 async function countdownTimer() {
-    while (seconds.get() > 0) {
-        seconds.set(seconds.get() - 1);
+    while (seconds > 0) {
+        seconds = seconds - 1;
         await new Promise(resolve => setTimeout(resolve, 1000));
     }
-    isDisabled.set(false);
+    isDisabled = false;
 }

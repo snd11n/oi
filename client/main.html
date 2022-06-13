@@ -1,5 +1,6 @@
 <head>
-  <title>Target counter</title>
+    <title>Target counter</title>
+    <link rel="icon" href="/pngegg.png">
 </head>
 
 <body>
@@ -29,7 +30,7 @@
         <div class="p-4">
             <div class="row">
                 <div class="col text-center">             
-                        {{> cible1 }}
+                    {{> cible1 }}
                 </div>
                 <div class="col text-center">
                     {{> cible2 }}
@@ -112,38 +113,34 @@
 </body>
 
 <template name="timer">
-    <h5 class="my-4">Temps restant : {{ seconds }} s.</h5>
+    <h3 class="my-4">Temps restant : {{ seconds }} s.</h3>
 </template>
 
-<!--<template name="cible1">
-    <button>toto</button>
-</template>-->
-
 <template name="totalPoints">
-    <h5 class="my-4">Total de points : {{ total }}</h5>
+    <h3 class="my-4">Total de points : {{ total }}</h3>
 </template>
 
 <template name="cible1">
-    <p >Cible 1 - {{ c1Distance }} m ({{ c3Points }} point(s))</p>
-    <div class="res-circle">
-        <p class="circle-point">{{ c1InPoint }}</p>
+    <h3>Cible 1 - {{ c1Distance }} m <b>({{ c1Points }} point)</b></h3>
+    <div class="res-circle bg-success">
+        <p class="circle-point">{{ c1TotalPoints }}</p>
         <p class="circle-txt">Points</p>
     </div>
 </template>
 
 <template name="cible2">
-    <p >Cible 2 - {{ c2Distance }} m ({{ c2Points }} point(s))</p>
-    <div class="res-circle">
-        <p class="circle-point">{{ c2InPoint }}</p>
+    <h3>Cible 2 - {{ c2Distance }} m <b>({{ c2Points }} points)</b></h3>
+    <div class="res-circle bg-warning">
+        <p class="circle-point">{{ c2TotalPoints }}</p>
         <p class="circle-txt">Points</p>
     </div>
         <h1></h1>
 </template>
 
 <template name="cible3">
-    <p >Cible 3 - {{ c3Distance }} m ({{ c3Points }} point(s))</p>
-    <div class="res-circle">
-        <p class="circle-point">{{ c3InPoint }}</p>
+    <h3>Cible 3 - {{ c3Distance }} m <b>({{ c3Points }} points)</b></h3>
+    <div class="res-circle bg-danger">
+        <p class="circle-point">{{ c3TotalPoints }}</p>
         <p class="circle-txt">Points</p>
         <h1></h1>
     </div>
@@ -152,11 +149,11 @@
 <template name="reinitialize">
     {{#if isDisabled }}
     <button id="reinitializeBtn" class="border border-4 border-dark rounded-3 w-100 h-100" disabled>
-        <h5>Réinitialiser</h5>
+        <h3>Réinitialiser</h3>
     </button>
     {{else}}
     <button id="reinitializeBtn" class="border border-4 border-dark rounded-3 text-white w-100 h-100">
-        <h5>Réinitialiser</h5>
+        <h3>Réinitialiser</h3>
     </button>
     {{/ if}}
 </template>

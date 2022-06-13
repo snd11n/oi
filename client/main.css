@@ -20,7 +20,6 @@ body {
 .res-circle {
   width: 30%;
   border-radius: 50%;
-  background: #EA99A2;
   margin: auto;
   border: solid 5px;
   line-height: 0;
@@ -38,7 +37,7 @@ body {
   bottom:10%;
   width: 100%;
   text-align: center;
-  font-size: xx-large;
+  font-size: x-large;
   font-weight: bold;
 }
 .circle-point {
