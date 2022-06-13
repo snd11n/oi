@@ -14,19 +14,19 @@ const serverBaseURL = "http://localhost:3000";
 // Template [cible1]
 var c1Distance = 15;
 var c1Points = new ReactiveVar(1);
-var c1NbTouch = 4;
+var c1NbTouch = 0;
 var c1TotalPoints = c1NbTouch * c1Points.get();
 
 // Template [cible2]
 var c2Distance = 25;
 var c2Points = new ReactiveVar(3);
-var c2NbTouch = 5;
+var c2NbTouch = 0;
 var c2TotalPoints =  c2NbTouch * c2Points.get();
 
 // Template [cible3]
 var c3Distance = 35;
 var c3Points = new ReactiveVar(5);
-var c3NbTouch = 6;
+var c3NbTouch = 0;
 var c3TotalPoints =  c3NbTouch * c3Points.get();
 
 // Template [timer]
