@@ -1,25 +1,151 @@
 <head>
-  <title>oi</title>
+    <title>Target counter</title>
+    <link rel="icon" href="/pngegg.png">
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+    <!-- Barre de navigation -->
+    <div class="container-fluid">
+        <nav class="navbar navbar-light navbar-expand-lg bg-light">
+            <a class="navbar-brand">Target counter</a>
+            <div class="collapse navbar-collapse">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="">Parcours 1</a>
+                    <a class="nav-item nav-link" href="">Parcours 2</a>
+                    <a class="nav-item nav-link" href="">Parcours 3</a>
+                </div>
+            </div>
+        </nav>
+    </div>
 
-  {{> hello}}
-  {{> info}}
+    <!-- Titre -->
+    <div class="container-fluid">
+        <div class="flex p-4">
+            <h1>Target counter</h1>
+        </div>
+    </div>
+
+    <!-- Cibles -->
+    <div class="container-fluid">
+        <div class="p-4">
+            <div class="row">
+                <div class="col text-center">             
+                    {{> cible1 }}
+                </div>
+                <div class="col text-center">
+                    {{> cible2 }}
+                </div>
+                <div class="col text-center">
+                    {{> cible3 }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Helpers -->
+        <div class="p-4">
+            <div class="row">
+                <div class="col text-center">
+                    <div class="border border-4 border-dark rounded-3">
+                        {{> timer }}
+                    </div>
+                </div>
+                <div class="col text-center">
+                    <div class="border border-4 border-dark rounded-3">
+                        {{> totalPoints }}
+                    </div>
+                </div>
+                <div class="col text-center">
+                    {{> reinitialize }}
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+    <!-- Titre historique des scores -->
+    <div class="container-fluid">
+        <div class="p-4">
+            <h1>Tableau des scores</h1>
+        </div>
+    </div>
+
+    <!-- Historique des scores -->
+    <div class="container">
+        <div class="p-4">
+            <div class="text-center">
+                {{> historyTable }}
+            </div>
+        </div>
+    </div>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="timer">
+    <h3 class="my-4">Temps restant : {{ seconds }} s.</h3>
 </template>
 
-<template name="info">
-  <h2>Learn Meteor!</h2>
-  <ul>
-    <li><a href="https://www.meteor.com/try" target="_blank">Do the Tutorial</a></li>
-    <li><a href="http://guide.meteor.com" target="_blank">Follow the Guide</a></li>
-    <li><a href="https://docs.meteor.com" target="_blank">Read the Docs</a></li>
-    <li><a href="https://forums.meteor.com" target="_blank">Discussions</a></li>
-  </ul>
+<template name="totalPoints">
+    <h3 class="my-4">Total de points : {{ total }}</h3>
+</template>
+
+<template name="cible1">
+    <h3>Cible 1 - {{ c1Distance }} m <b>({{ c1Points }} point)</b></h3>
+    <div class="res-circle bg-success">
+        <p class="circle-point">{{ c1TotalPoints }}</p>
+        <p class="circle-txt">Points</p>
+    </div>
+</template>
+
+<template name="cible2">
+    <h3>Cible 2 - {{ c2Distance }} m <b>({{ c2Points }} points)</b></h3>
+    <div class="res-circle bg-warning">
+        <p class="circle-point">{{ c2TotalPoints }}</p>
+        <p class="circle-txt">Points</p>
+    </div>
+        <h1></h1>
+</template>
+
+<template name="cible3">
+    <h3>Cible 3 - {{ c3Distance }} m <b>({{ c3Points }} points)</b></h3>
+    <div class="res-circle bg-danger">
+        <p class="circle-point">{{ c3TotalPoints }}</p>
+        <p class="circle-txt">Points</p>
+        <h1></h1>
+    </div>
+</template>
+  
+<template name="reinitialize">
+    {{#if isDisabled }}
+    <button id="reinitializeBtn" class="border border-4 border-dark rounded-3 w-100 h-100" disabled>
+        <h3>Réinitialiser</h3>
+    </button>
+    {{else}}
+    <button id="reinitializeBtn" class="border border-4 border-dark rounded-3 text-white w-100 h-100">
+        <h3>Réinitialiser</h3>
+    </button>
+    {{/ if}}
+</template>
+
+<template name="historyTable">
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" class="">Partie #</th>
+                <th scope="col">Cible 1</th>
+                <th scope="col">Cible 2</th>
+                <th scope="col">Cible 3</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{#each gamesCollection }}
+            <tr>
+                <th scope="row">{{ id }}</th>
+                <td>{{ c1 }}</td>
+                <td>{{ c2 }}</td>
+                <td>{{ c3 }}</td>
+                <td>{{ total }}</td>
+            </tr>
+        {{/each }}
+        </tbody>
+    </table>
 </template>
