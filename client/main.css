@@ -18,10 +18,11 @@ body {
 }
 
 .res-circle {
-  width: 10%;
+  width: 30%;
   border-radius: 50%;
-  background: #bcd6ff;
-
+  background: #EA99A2;
+  margin: auto;
+  border: solid 5px;
   line-height: 0;
   position: relative;
 }
@@ -34,9 +35,17 @@ body {
  
 .circle-txt {
   position: absolute;
-  bottom: 50%;
+  bottom:10%;
   width: 100%;
   text-align: center;
-
+  font-size: xx-large;
+  font-weight: bold;
+}
+.circle-point {
+  position: absolute;
+  bottom:45%;
+  width: 100%;
+  text-align: center;
+  font-size: xx-large;
   font-weight: bold;
 }

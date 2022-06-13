@@ -10,14 +10,17 @@ import './main.html';
 // Template [cible1]
 var c1Distance = 15;
 var c1Points = 1;
+var c1InPoint = 0;
 
 // Template [cible2]
 var c2Distance = 25;
 var c2Points = 3;
+var c2InPoint = 0;
 
 // Template [cible3]
 var c3Distance = 35;
 var c3Points = 5;
+var cInPoint = 0;
 
 // Template [timer]
 var seconds = new ReactiveVar(10);
@@ -33,7 +36,8 @@ var isDisabled = new ReactiveVar(true);
 // Template [cible1]
 Template.cible1.helpers({
     c1Distance() { return c1Distance; },
-    c1Points() { return c1Points; }
+    c1Points() { return c1Points; },
+    c1InPoint() { return c1InPoint; },
 });
 
 /*Template.cible1.events({
@@ -46,13 +50,15 @@ Template.cible1.helpers({
 // Template [cible2]
 Template.cible2.helpers({
     c2Distance() { return c2Distance; },
-    c2Points() { return c2Points; }
+    c2Points() { return c2Points; },
+    c2InPoint() { return c1InPoint; },
 });
 
 // Template [cible3]
 Template.cible3.helpers({
     c3Distance() { return c3Distance; },
-    c3Points() { return c3Points; }
+    c3Points() { return c3Points; },
+    c3InPoint() { return c1InPoint; },
 });
 
 // Template [timer]
