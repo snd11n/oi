@@ -95,6 +95,7 @@ Meteor.publish(
                 (topic, message) => {
                     if (hasAdded) {
                         this.changed('c1NbTouch', '0', {nbTouch: JSON.parse(message.toString())['touchCib1']});
+                        isGameStarted = true;
                     } else {
                         this.changed('c1NbTouch', '0', {nbTouch: 1});
                         hasAdded = true;
@@ -185,6 +186,7 @@ WebApp.connectHandlers.use(
                     { nbTouch: 0 }
                 );
 
+                isGameStarted = false;
 
                 res
                     .writeHead(200)
