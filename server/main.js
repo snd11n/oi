@@ -11,6 +11,7 @@ const Cible3NbTouch = new Mongo.Collection('c3NbTouch');
 const mqttServerBaseURL = "mqtt://31.34.157.18:1884";
 
 var isGameStarted = false;
+var firstGame = true;
 
 Meteor.startup(() => {
     GamesHistory.remove({});
@@ -126,7 +127,7 @@ Meteor.publish(
                             if (hasAdded) {
                                 this.changed('c2NbTouch', '0', { nbTouch: JSON.parse(message.toString())['touchCib2'] });
                             } else {
-                                this.changed('c2NbTouch', '0', { nbTouch: 1 });
+                                this.changed('c2NbTouch', '0', { nbTouch: firstGame ? 1 : 0 });
                                 hasAdded = true;
                             }
                         }
@@ -155,7 +156,7 @@ Meteor.publish(
                             if (hasAdded) {
                                 this.changed('c3NbTouch', '0', { nbTouch: JSON.parse(message.toString())['touchCib3'] });
                             } else {
-                                this.changed('c3NbTouch', '0', { nbTouch: 1 });
+                                this.changed('c3NbTouch', '0', { nbTouch: firstGame ? 1 : 0 });
                                 hasAdded = true;
                             }
                         }
@@ -173,20 +174,22 @@ WebApp.connectHandlers.use(
     (req, res, next) => {
         switch (req.method) {
             case 'POST':
-                Cible1NbTouch.update(
-                    '0',
-                    { nbTouch: 0 }
-                );
-                Cible2NbTouch.update(
-                    '0',
-                    { nbTouch: 0 }
-                );
-                Cible3NbTouch.update(
-                    '0',
-                    { nbTouch: 0 }
-                );
-
                 isGameStarted = false;
+                firstGame = false;
+
+                const client = mqtt.connect(mqttServerBaseURL);
+                client.publish(
+                    'EPSI/OpenInnov/Cible1',
+                    '{"touchCib1": 0}'
+                );
+                client.publish(
+                    'EPSI/OpenInnov/Cible2',
+                    '{"touchCib2": 0}'
+                );
+                client.publish(
+                    'EPSI/OpenInnov/Cible3',
+                    '{"touchCib3": 0}'
+                );
 
                 res
                     .writeHead(200)
