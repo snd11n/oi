@@ -6,33 +6,63 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import './main.html';
 
+Meteor.startup(() => {
+    fetch(
+        serverBaseURL + '/api/nbtouch/c1',
+        {
+            method: 'GET'
+        }
+    ).then((response) => {
+        return response.json();
+    }).then((response) => {
+        c1NbTouch = response.nbTouch;
+    });
+    fetch(
+        serverBaseURL + '/api/nbtouch/c2',
+        {
+            method: 'GET'
+        }
+    ).then((response) => {
+        return response.json();
+    }).then((response) => {
+        c2NbTouch = response.nbTouch;
+    });
+    fetch(
+        serverBaseURL + '/api/nbtouch/c3',
+        {
+            method: 'GET'
+        }
+    ).then((response) => {
+        return response.json();
+    }).then((response) => {
+        c3NbTouch = response.nbTouch;
+    });
+});
+
 // ------------------------------ Variables ------------------------------ //
 
 // Server
 const serverBaseURL = "http://localhost:3000";
 
 // Collection
-var Cible1Total = new Mongo.Collection('c1Total');
-var Cible2Total = new Mongo.Collection('c2Total');
-var Cible3Total = new Mongo.Collection('c3Total');
+var Cible1NbTouch = new Mongo.Collection('c1NbTouch');
+var Cible2NbTouch = new Mongo.Collection('c2NbTouch');
+var Cible3NbTouch = new Mongo.Collection('c3NbTouch');
 
 // Template [cible1]
 var c1Distance = 15;
 var c1Points = new ReactiveVar(1);
-var c1NbTouch = 0;
-var c1TotalPoints = new ReactiveVar(c1NbTouch * c1Points.get());
+var c1NbTouch;
 
 // Template [cible2]
 var c2Distance = 25;
 var c2Points = new ReactiveVar(3);
-var c2NbTouch = 0;
-var c2TotalPoints = new ReactiveVar(c2NbTouch * c2Points.get());
+var c2NbTouch;
 
 // Template [cible3]
 var c3Distance = 35;
 var c3Points = new ReactiveVar(5);
-var c3NbTouch = 0;
-var c3TotalPoints = new ReactiveVar(c3NbTouch * c3Points.get());
+var c3NbTouch;
 
 // Template [timer]
 var seconds = new ReactiveVar(10);
@@ -52,7 +82,10 @@ var gameHistory = new ReactiveVar();
 Template.cible1.helpers({
     c1Distance() { return c1Distance; },
     c1Points() { return c1Points.get(); },
-    c1TotalPoints() { return c1TotalPoints.get(); },
+    c1TotalPoints() {
+        c1NbTouch = Cible1NbTouch.find().fetch()[0].nbTouch;
+        return c1NbTouch === 0 ? c1NbTouch : c1NbTouch * c1Points.get();
+    },
 });
 
 Template.cible1.onCreated(() => {
@@ -63,7 +96,10 @@ Template.cible1.onCreated(() => {
 Template.cible2.helpers({
     c2Distance() { return c2Distance; },
     c2Points() { return c2Points.get(); },
-    c2TotalPoints() { return c2TotalPoints.get(); },
+    c2TotalPoints() {
+        c2NbTouch = Cible2NbTouch.find().fetch()[0].nbTouch;
+        return c2NbTouch === 0 ? c2NbTouch : c2NbTouch * c2Points.get();
+    },
 });
 
 Template.cible2.onCreated(() => {
@@ -74,7 +110,10 @@ Template.cible2.onCreated(() => {
 Template.cible3.helpers({
     c3Distance() { return c3Distance; },
     c3Points() { return c3Points.get(); },
-    c3TotalPoints() { return c3TotalPoints.get(); },
+    c3TotalPoints() {
+        c3NbTouch = Cible3NbTouch.find().fetch()[0].nbTouch;
+        return c3NbTouch === 0 ? c3NbTouch : c3NbTouch * c3Points.get();
+    }
 });
 
 Template.cible3.onCreated(() => {

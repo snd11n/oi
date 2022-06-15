@@ -5,16 +5,16 @@ import { Mongo } from 'meteor/mongo';
 const mqtt = require('mqtt');
 
 const GamesHistory = new Mongo.Collection('games');
-const Cible1Total = new Mongo.Collection('c1Total');
-const Cible2Total = new Mongo.Collection('c2Total');
-const Cible3Total = new Mongo.Collection('c3Total');
+const Cible1NbTouch = new Mongo.Collection('c1NbTouch');
+const Cible2NbTouch = new Mongo.Collection('c2NbTouch');
+const Cible3NbTouch = new Mongo.Collection('c3NbTouch');
 const mqttServerBaseURL = "mqtt://31.34.157.18:1884";
 
 Meteor.startup(() => {
     GamesHistory.remove({});
-    Cible1Total.remove({});
-    Cible2Total.remove({});
-    Cible3Total.remove({});
+    Cible1NbTouch.remove({});
+    Cible2NbTouch.remove({});
+    Cible3NbTouch.remove({});
     GamesHistory.insert({
         'c1': 3,
         'c2': 2,
@@ -39,15 +39,15 @@ Meteor.startup(() => {
         'c3': 10,
         'createdAt': Date.now()
     });
-    Cible1Total.insert({
+    Cible1NbTouch.insert({
         '_id': '0',
         'nbTouch': 0
     });
-    Cible2Total.insert({
+    Cible2NbTouch.insert({
         '_id': '0',
         'nbTouch': 0
     });
-    Cible3Total.insert({
+    Cible3NbTouch.insert({
         '_id': '0',
         'nbTouch': 0
     });
@@ -63,6 +63,20 @@ function getAllGameHistory() {
     }).fetch();
 }
 
+function getC1NbTouch() {
+    return Cible1NbTouch.find().fetch()[0];
+}
+
+function getC2NbTouch() {
+    return Cible2NbTouch.find().fetch()[0];
+}
+
+function getC3NbTouch() {
+    return Cible3NbTouch.find().fetch()[0];
+}
+
+// ------------------------------ Publisher ------------------------------ //
+
 Meteor.publish(
     "brokerC1",
     function () {
@@ -70,19 +84,21 @@ Meteor.publish(
             const client = await mqtt.connect(mqttServerBaseURL);
             let hasAdded = false;
 
+            this.added('c1NbTouch', '0', { nbTouch: 0 });
+
             client
                 .subscribe('EPSI/OpenInnov/Cible1')
                 .on(
                 'message',
                 (topic, message) => {
                     if (hasAdded) {
-                        this.changed('c1Total', '0', { nbTouch: JSON.parse(message.toString())['nbTouch'] });
+                        this.changed('c1NbTouch', '0', {nbTouch: JSON.parse(message.toString())['touchCib1']});
                     } else {
-                        this.added('c1Total', '0', { nbTouch: 1 });
+                        this.changed('c1NbTouch', '0', {nbTouch: 1});
                         hasAdded = true;
                     }
-                }
-            );
+                });
+
             this.ready();
         })();
     }
@@ -95,15 +111,17 @@ Meteor.publish(
             const client = await mqtt.connect(mqttServerBaseURL);
             let hasAdded = false;
 
+            this.added('c2NbTouch', '0', { nbTouch: 0 });
+
             client
                 .subscribe('EPSI/OpenInnov/Cible2')
                 .on(
                     'message',
                     (topic, message) => {
                         if (hasAdded) {
-                            this.changed('c2Total', '0', { nbTouch: JSON.parse(message.toString())['nbTouch'] });
+                            this.changed('c2NbTouch', '0', { nbTouch: JSON.parse(message.toString())['touchCib2'] });
                         } else {
-                            this.added('c2Total', '0', { nbTouch: 1 });
+                            this.changed('c2NbTouch', '0', { nbTouch: 1 });
                             hasAdded = true;
                         }
                     }
@@ -120,21 +138,59 @@ Meteor.publish(
             const client = await mqtt.connect(mqttServerBaseURL);
             let hasAdded = false;
 
+            this.added('c3NbTouch', '0', { nbTouch: 0 });
+
             client
                 .subscribe('EPSI/OpenInnov/Cible3')
                 .on(
                     'message',
                     (topic, message) => {
                         if (hasAdded) {
-                            this.changed('c3Total', '0', { nbTouch: JSON.parse(message.toString())['nbTouch'] });
+                            this.changed('c3NbTouch', '0', { nbTouch: JSON.parse(message.toString())['touchCib3'] });
                         } else {
-                            this.added('c3Total', '0', { nbTouch: 1 });
+                            this.changed('c3NbTouch', '0', { nbTouch: 1 });
                             hasAdded = true;
                         }
                     }
                 );
             this.ready();
         })();
+    }
+);
+
+// ------------------------------ End-points ------------------------------ //
+
+WebApp.connectHandlers.use(
+    '/api/nbtouch/',
+    (req, res, next) => {
+        switch (req.method) {
+            case 'GET':
+                var data;
+                switch (req.url.substring(req.url.lastIndexOf("/") + 1)) {
+                    case "c1":
+                        data = getC1NbTouch();
+                        break;
+                    case "c2":
+                        data = getC2NbTouch();
+                        break;
+                    case "c3":
+                        data = getC3NbTouch();
+                        break;
+                    default:
+                        break;
+                }
+
+                res
+                    .setHeader('Content-Type', 'application/json')
+                    .writeHead(200)
+                    .end(JSON.stringify(data));
+                break;
+            default:
+                res
+                    .writeHead(405)
+                    .end();
+                break;
+        }
     }
 );
 
