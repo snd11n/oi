@@ -152,6 +152,13 @@ Template.reinitialize.events({
       isDisabled.set(true);
       total.set(0);
       seconds.set(10);
+
+      fetch(
+          serverBaseURL + '/api/game-over',
+          {
+              method: 'POST'
+          }
+      );
   }
 });
 
