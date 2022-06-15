@@ -172,6 +172,19 @@ WebApp.connectHandlers.use(
     (req, res, next) => {
         switch (req.method) {
             case 'POST':
+                Cible1NbTouch.update(
+                    '0',
+                    { nbTouch: 0 }
+                );
+                Cible2NbTouch.update(
+                    '0',
+                    { nbTouch: 0 }
+                );
+                Cible3NbTouch.update(
+                    '0',
+                    { nbTouch: 0 }
+                );
+
 
                 res
                     .writeHead(200)
