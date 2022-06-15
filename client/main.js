@@ -15,7 +15,7 @@ Meteor.startup(() => {
     ).then((response) => {
         return response.json();
     }).then((response) => {
-        c1NbTouch = response.nbTouch;
+        c1NbTouch.set(response.nbTouch);
     });
     fetch(
         serverBaseURL + '/api/nbtouch/c2',
@@ -25,7 +25,7 @@ Meteor.startup(() => {
     ).then((response) => {
         return response.json();
     }).then((response) => {
-        c2NbTouch = response.nbTouch;
+        c2NbTouch.set(response.nbTouch);
     });
     fetch(
         serverBaseURL + '/api/nbtouch/c3',
@@ -35,7 +35,7 @@ Meteor.startup(() => {
     ).then((response) => {
         return response.json();
     }).then((response) => {
-        c3NbTouch = response.nbTouch;
+        c3NbTouch.set(response.nbTouch);
     });
 });
 
@@ -52,23 +52,24 @@ var Cible3NbTouch = new Mongo.Collection('c3NbTouch');
 // Template [cible1]
 var c1Distance = 15;
 var c1Points = new ReactiveVar(1);
-var c1NbTouch;
+var c1NbTouch = new ReactiveVar(0);
+var isFirstTouch = new ReactiveVar(true);
 
 // Template [cible2]
 var c2Distance = 25;
 var c2Points = new ReactiveVar(3);
-var c2NbTouch;
+var c2NbTouch = new ReactiveVar(0);
 
 // Template [cible3]
 var c3Distance = 35;
 var c3Points = new ReactiveVar(5);
-var c3NbTouch;
+var c3NbTouch = new ReactiveVar(0);
 
 // Template [timer]
 var seconds = new ReactiveVar(10);
 
 // Template [totalPoints]
-var total = new ReactiveVar(0);
+var total = new ReactiveVar(40);
 
 // Template [reinitialize]
 var isDisabled = new ReactiveVar(true);
@@ -83,8 +84,16 @@ Template.cible1.helpers({
     c1Distance() { return c1Distance; },
     c1Points() { return c1Points.get(); },
     c1TotalPoints() {
-        c1NbTouch = Cible1NbTouch.find().fetch()[0].nbTouch;
-        return c1NbTouch === 0 ? c1NbTouch : c1NbTouch * c1Points.get();
+        c1NbTouch.set(Cible1NbTouch.find().fetch()[0].nbTouch);
+        if (c1NbTouch.get() == null || c1NbTouch.get() === 0) {
+            return 0;
+        } else {
+            if (isFirstTouch.get()) {
+                countdownTimer();
+                isFirstTouch.set(false);
+            }
+            return c1NbTouch.get() * c1Points.get();
+        }
     },
 });
 
@@ -97,8 +106,8 @@ Template.cible2.helpers({
     c2Distance() { return c2Distance; },
     c2Points() { return c2Points.get(); },
     c2TotalPoints() {
-        c2NbTouch = Cible2NbTouch.find().fetch()[0].nbTouch;
-        return c2NbTouch === 0 ? c2NbTouch : c2NbTouch * c2Points.get();
+        c2NbTouch.set(Cible2NbTouch.find().fetch()[0].nbTouch);
+        return c2NbTouch.get() === 0 ? c2NbTouch.get() : c2NbTouch.get() * c2Points.get();
     },
 });
 
@@ -111,8 +120,8 @@ Template.cible3.helpers({
     c3Distance() { return c3Distance; },
     c3Points() { return c3Points.get(); },
     c3TotalPoints() {
-        c3NbTouch = Cible3NbTouch.find().fetch()[0].nbTouch;
-        return c3NbTouch === 0 ? c3NbTouch : c3NbTouch * c3Points.get();
+        c3NbTouch.set(Cible3NbTouch.find().fetch()[0].nbTouch);
+        return c3NbTouch.get() === 0 ? c3NbTouch.get() : c3NbTouch.get() * c3Points.get();
     }
 });
 
@@ -127,7 +136,10 @@ Template.timer.helpers({
 
 // Template [totalPoints]
 Template.totalPoints.helpers({
-    total() { return total.get(); }
+    total() {
+        total.set(c1NbTouch.get() * c1Points.get() + c2NbTouch.get() * c2Points.get() + c3NbTouch.get() * c3Points.get());
+        return total.get();
+    }
 });
 
 // Template [reinitialize]
@@ -186,9 +198,9 @@ async function countdownTimer() {
     isDisabled.set(false);
 
     var newGame = {
-        c1: c1NbTouch,
-        c2: c2NbTouch,
-        c3: c3NbTouch,
+        c1: c1NbTouch.get(),
+        c2: c2NbTouch.get(),
+        c3: c3NbTouch.get(),
         createdAt: Date.now()
     };
     fetch(
